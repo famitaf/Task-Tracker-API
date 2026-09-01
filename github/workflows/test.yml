@@ -1,0 +1,17 @@
+name: Run Tests with Docker
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build and run containers
+        run: docker compose up --build -d
+
+      - name: Run pytest inside the container
+        run: docker compose exec -T web pytest
